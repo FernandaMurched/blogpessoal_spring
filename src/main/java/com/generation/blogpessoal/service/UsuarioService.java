@@ -50,6 +50,7 @@ public class UsuarioService {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+			usuario.setId(null);
 
 			return Optional.ofNullable(usuarioRepository.save(usuario));
 
