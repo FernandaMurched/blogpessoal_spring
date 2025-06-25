@@ -1,6 +1,5 @@
 package com.generation.blogpessoal.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +28,6 @@ public class UsuarioService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public List<Usuario> getAll() {
-		return usuarioRepository.findAll();
-	}
-
-	public Optional<Usuario> getById(Long id) {
-		return usuarioRepository.findById(id);
-	}
-
 	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
@@ -55,10 +46,12 @@ public class UsuarioService {
 
 			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
-			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
+			if ((buscaUsuario.isPresent()) && (!buscaUsuario.get().getId().equals(usuario.getId())))
+
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+			usuario.setId(null);
 
 			return Optional.ofNullable(usuarioRepository.save(usuario));
 

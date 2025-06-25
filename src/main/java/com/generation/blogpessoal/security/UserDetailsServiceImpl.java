@@ -15,14 +15,12 @@ import com.generation.blogpessoal.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		if (username == null || username.trim().isEmpty())
-			throw new UsernameNotFoundException("Usuário (e-mail) não pode ser vazio");
 
 		Optional<Usuario> usuario = usuarioRepository.findByUsuario(username);
 
@@ -30,6 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return new UserDetailsImpl(usuario.get());
 		else
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Erro ao Autenticar o Usuário");
-
+			
 	}
 }
