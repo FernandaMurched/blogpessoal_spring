@@ -61,6 +61,8 @@ public class PostagemController {
 	public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem){
 		
 		if (temaRepository.existsById(postagem.getTema().getId())) {
+			
+			postagem.setId(null);
 		
 			return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
 		}

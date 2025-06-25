@@ -49,6 +49,7 @@ public class TemaController {
 
 	@PostMapping
 	public ResponseEntity<Tema> post(@Valid @RequestBody Tema tema) {
+		tema.setId(null);
 		return ResponseEntity.status(HttpStatus.CREATED).body(temaRepository.save(tema));
 	}
 
